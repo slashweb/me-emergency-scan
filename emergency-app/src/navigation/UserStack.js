@@ -7,6 +7,8 @@ import Dashboard from "../pages/Dashboard";
 import LogOut from "../pages/LogOut";
 import DrRegister from "../pages/DrRegister";
 import DrLayout from "../layouts/DrLayout";
+import DrDashboard from "../pages/DrDashboard";
+import DrUsers from "../pages/DrUsers";
 
 export default function UserStack() {
   return <>
@@ -36,7 +38,16 @@ export default function UserStack() {
             path='/dr-dashboard'
             element={
               <DrLayout>
-                <DrRegister />
+                <DrDashboard />
+              </DrLayout>
+            }
+          />
+
+          <Route
+            path='/dr-users'
+            element={
+              <DrLayout>
+                <DrUsers />
               </DrLayout>
             }
           />
