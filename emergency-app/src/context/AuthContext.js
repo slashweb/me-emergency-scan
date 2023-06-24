@@ -17,6 +17,8 @@ export function AuthProvider({children}) {
   const [user, setUser] = useState()
   const [loading, setLoading] = useState(false)
   const [hasProfile, setHasProfile] = useState(false)
+  const [userRecord, setUserRecord] = useState()
+  const [drRecord, setDrRecord] = useState()
 
   const contract = useMeHealthScanner()
 
@@ -33,15 +35,13 @@ export function AuthProvider({children}) {
     setLoading(true)
     auth.onAuthUpdate(async authState => {
       if (authState) {
-        // Get the user Profile from the contract
         const userRecord = await contract.methods?.getUserRecord(authState.userId).call()
-        if (!userRecord.wallet) {
-          setUser(authState)
-          setHasProfile(false)
-        } else {
-          setUser(userRecord)
-          setHasProfile(true)
-        }
+        setUserRecord(userRecord)
+
+        const drRecord = await contract.methods?.getDoctorData(authState.userId).call()
+        setDrRecord(drRecord)
+
+        setUser(authState)
       } else {
         setUser(null)
       }
@@ -55,7 +55,9 @@ export function AuthProvider({children}) {
       signOut,
       user,
       loading,
-      hasProfile
+      hasProfile,
+      userRecord,
+      drRecord
     }}
   >
     {children}

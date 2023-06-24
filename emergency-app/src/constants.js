@@ -2,8 +2,27 @@ export const MAIN_LOGO = 'https://res.cloudinary.com/dgcxcqu6p/image/upload/v168
 export const PROFILE_IMAGE  ='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
 export const CHAIN_ID = 10200
 
-export const CONTRACT_ID = '0xe7c578d56989423FfFC7044fE02Aab2dC94f0EA4'
+export const CONTRACT_ID = '0xc7bf948ab9DB5dE2eC0686002FD1997d4e8A774E'
 export const ABI = [
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"name": "MedicalHistories",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "patien",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
 		{
 			"inputs": [
 				{
@@ -63,7 +82,7 @@ export const ABI = [
 						},
 						{
 							"internalType": "string[]",
-							"name": "recipes",
+							"name": "drugs",
 							"type": "string[]"
 						}
 					],
@@ -105,6 +124,25 @@ export const ABI = [
 					"internalType": "string",
 					"name": "name",
 					"type": "string"
+				}
+			],
+			"name": "createDoctor",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "string",
+					"name": "name",
+					"type": "string"
 				},
 				{
 					"internalType": "string",
@@ -138,7 +176,7 @@ export const ABI = [
 				},
 				{
 					"internalType": "string[]",
-					"name": "recipes",
+					"name": "drugs",
 					"type": "string[]"
 				}
 			],
@@ -208,7 +246,7 @@ export const ABI = [
 								},
 								{
 									"internalType": "string[]",
-									"name": "recipes",
+									"name": "drugs",
 									"type": "string[]"
 								}
 							],
@@ -220,6 +258,98 @@ export const ABI = [
 					"internalType": "struct MeEmergencyScan.User[]",
 					"name": "",
 					"type": "tuple[]"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "wallet",
+					"type": "address"
+				}
+			],
+			"name": "getDoctorData",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "address",
+							"name": "wallet",
+							"type": "address"
+						},
+						{
+							"internalType": "string",
+							"name": "name",
+							"type": "string"
+						},
+						{
+							"internalType": "bool",
+							"name": "isActive",
+							"type": "bool"
+						}
+					],
+					"internalType": "struct MeEmergencyScan.Doctor",
+					"name": "",
+					"type": "tuple"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "wallet",
+					"type": "address"
+				}
+			],
+			"name": "getUserHistory",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "address",
+							"name": "patien",
+							"type": "address"
+						},
+						{
+							"internalType": "string[]",
+							"name": "chronicDiseases",
+							"type": "string[]"
+						},
+						{
+							"internalType": "string[]",
+							"name": "surgeries",
+							"type": "string[]"
+						},
+						{
+							"internalType": "string[]",
+							"name": "pathologicalHistory",
+							"type": "string[]"
+						},
+						{
+							"internalType": "string[]",
+							"name": "nonPathologicalHistory",
+							"type": "string[]"
+						},
+						{
+							"internalType": "string[]",
+							"name": "paternalFamilyInheritedPathologies",
+							"type": "string[]"
+						},
+						{
+							"internalType": "string[]",
+							"name": "martenalFamilyInheritedPathologies",
+							"type": "string[]"
+						}
+					],
+					"internalType": "struct MeEmergencyScan.MedicalHistory",
+					"name": "",
+					"type": "tuple"
 				}
 			],
 			"stateMutability": "view",
@@ -286,7 +416,7 @@ export const ABI = [
 								},
 								{
 									"internalType": "string[]",
-									"name": "recipes",
+									"name": "drugs",
 									"type": "string[]"
 								}
 							],
@@ -329,6 +459,35 @@ export const ABI = [
 				}
 			],
 			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "patien",
+					"type": "address"
+				},
+				{
+					"internalType": "string",
+					"name": "prop",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "value",
+					"type": "string"
+				}
+			],
+			"name": "updateMedicalHistory",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "nonpayable",
 			"type": "function"
 		}
 	]

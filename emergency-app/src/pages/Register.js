@@ -17,7 +17,7 @@ export default function Register() {
   const [surgeries, setSurgeries] = useState()
   const [recipes, setRecipes] = useState()
 
-  const { signIn, user } = useAuth()
+  const { signIn, user, userRecord } = useAuth()
   const navigate = useNavigate()
   const contract = useMeHealthScanner()
 
@@ -25,8 +25,7 @@ export default function Register() {
     if (!user) {
       await signIn()
     }
-
-    const userRecord = await contract.methods?.getUserRecord(user.userId).call()
+    
     if (userRecord.wallet.toUpperCase() === user.userId.toUpperCase()) {
       navigate('/dashboard')
       return

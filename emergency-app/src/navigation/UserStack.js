@@ -5,13 +5,15 @@ import Register from "../pages/Register";
 import {AuthProvider} from "../context/AuthContext";
 import Dashboard from "../pages/Dashboard";
 import LogOut from "../pages/LogOut";
+import DrRegister from "../pages/DrRegister";
+import DrLayout from "../layouts/DrLayout";
 
 export default function UserStack() {
   return <>
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path='/logout' element={<LogOut />} />
+          <Route path='/logout' element={<LogOut/>}/>
           <Route
             path='/'
             element={
@@ -22,20 +24,38 @@ export default function UserStack() {
           />
 
           <Route
+            path='/dr-register'
+            element={
+              <UserLayout>
+                <DrRegister />
+              </UserLayout>
+            }
+          />
+
+          <Route
+            path='/dr-dashboard'
+            element={
+              <DrLayout>
+                <DrRegister />
+              </DrLayout>
+            }
+          />
+
+          <Route
             path='/register'
-            initial={true}
             element={
               <UserLayout>
                 <Register/>
               </UserLayout>
-            }/>
+            }
+          />
 
           <Route
             path='/dashboard'
             initial={true}
             element={
               <UserLayout>
-                <Dashboard />
+                <Dashboard/>
               </UserLayout>
             }/>
         </Routes>
