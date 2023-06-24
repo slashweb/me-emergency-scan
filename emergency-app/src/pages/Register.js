@@ -4,6 +4,7 @@ import {MAIN_LOGO} from "../constants";
 import {useState} from "react";
 import useMeHealthScanner from "../hooks/useMeHealthScanner";
 import {useAuth} from "../context/AuthContext";
+import {useNavigate, useNavigation} from "react-router-dom";
 
 export default function Register() {
 
@@ -17,15 +18,20 @@ export default function Register() {
   const [recipes, setRecipes] = useState()
 
   const { signIn, user } = useAuth()
-
+  const navigate = useNavigate()
   const contract = useMeHealthScanner()
 
   const createNewProfile = async () => {
     if (!user) {
-      const authRes = await signIn()
-      console.log('after login', authRes)
+      await signIn()
     }
-console.log('after login', user)
+
+    const userRecord = await contract.methods?.getUserRecord(user.userId).call()
+    if (userRecord.wallet.toUpperCase() === user.userId.toUpperCase()) {
+      navigate('/dashboard')
+      return
+    }
+
     const res = await contract?.methods?.createUserProfile(
       name,
       bloodType,
@@ -42,13 +48,8 @@ console.log('after login', user)
   return (
 
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6  lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto h-10 w-auto"
-            src={MAIN_LOGO}
-            alt="Your Company"
-          />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Create new account
           </h2>

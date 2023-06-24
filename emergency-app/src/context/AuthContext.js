@@ -1,5 +1,6 @@
 import {Auth} from "@polybase/auth";
 import {createContext, useContext, useEffect, useState} from "react";
+import useMeHealthScanner from "../hooks/useMeHealthScanner";
 
 export const authContext = createContext()
 const auth = new Auth()
@@ -15,15 +16,32 @@ export const useAuth = () => {
 export function AuthProvider({children}) {
   const [user, setUser] = useState()
   const [loading, setLoading] = useState(false)
+  const [hasProfile, setHasProfile] = useState(false)
 
-  const signIn = async () => await auth?.signIn({force: true})
+  const contract = useMeHealthScanner()
+
+  const signIn = async () => {
+    try {
+      await auth?.signIn({force: true})
+    } catch (err) {
+
+    }
+  }
   const signOut = async () => await auth?.signOut()
 
   useEffect(() => {
     setLoading(true)
     auth.onAuthUpdate(async authState => {
       if (authState) {
-        setUser(authState)
+        // Get the user Profile from the contract
+        const userRecord = await contract.methods?.getUserRecord(authState.userId).call()
+        if (!userRecord.wallet) {
+          setUser(authState)
+          setHasProfile(false)
+        } else {
+          setUser(userRecord)
+          setHasProfile(true)
+        }
       } else {
         setUser(null)
       }
@@ -36,7 +54,8 @@ export function AuthProvider({children}) {
       signIn,
       signOut,
       user,
-      loading
+      loading,
+      hasProfile
     }}
   >
     {children}
