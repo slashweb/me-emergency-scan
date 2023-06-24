@@ -25,7 +25,7 @@ export default function Register() {
     if (!user) {
       await signIn()
     }
-    
+
     if (userRecord.wallet.toUpperCase() === user.userId.toUpperCase()) {
       navigate('/dashboard')
       return
@@ -99,7 +99,7 @@ export default function Register() {
             />
 
             <TextInput
-              label={'Recipes'}
+              label={'Drugs'}
               onChange={(val) => setRecipes(val)}
             />
 
