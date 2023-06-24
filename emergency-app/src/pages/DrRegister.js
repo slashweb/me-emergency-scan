@@ -53,6 +53,7 @@ export default function DrRegister() {
             <div>
               <CustomButton
                 label={'Create new account'}
+                onCLick={() => {}}
               />
             </div>
           </form>

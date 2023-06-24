@@ -16,7 +16,7 @@ export default function UserLayout({children}) {
     {name: 'Dashboard', href: '/dashboard', current: false},
     {name: 'Create Account', href: '/register', current: false},
     {name: 'Create Doctor', href: '/dr-register', current: false},
-    {name: 'Login', href: '/login', current: false},
+    {name: 'QR', href: '/qr', current: false},
   ]
   const userNavigation = [
     {name: 'Your dashboard', href: '/dashboard'},

@@ -1,7 +1,34 @@
+import History from "../components/History";
+import {useAuth} from "../context/AuthContext";
+import Record from "../components/Record";
+
 export default function Dashboard() {
+
+  const {user} = useAuth()
+
   return (
+
     <>
-      <h1>Dashboard</h1>
+      <div className='h-full w-full'>
+
+        {
+          user &&
+          <>
+            <div className='bg-gray-100 p-10 shadow rounded '>
+              <Record
+                wallet={user.userId}
+              />
+            </div>
+            <div className='bg-gray-100 p-10 shadow rounded mt-5'>
+              <History
+                wallet={user.userId}
+              />
+            </div>
+          </>
+        }
+
+
+      </div>
     </>
   )
 }

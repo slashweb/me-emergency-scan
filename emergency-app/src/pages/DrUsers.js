@@ -2,9 +2,6 @@ import QrReader from 'react-qr-scanner'
 import {useState} from "react";
 import CustomButton from "../ui-kit/CustomButton";
 
-import {Fragment} from 'react'
-import {Menu, Transition} from '@headlessui/react'
-import {CodeBracketIcon, EllipsisVerticalIcon, FlagIcon, StarIcon} from '@heroicons/react/20/solid'
 import useMeHealthScanner from "../hooks/useMeHealthScanner";
 import History from "../components/History";
 import Record from "../components/Record";
@@ -15,7 +12,6 @@ function classNames(...classes) {
 
 export default function DrUsers() {
 
-  const [key, setKey] = useState()
   const [userWallet, setUserWallet] = useState()
 
   const [showScanner, setShowScanner] = useState()
@@ -27,14 +23,12 @@ export default function DrUsers() {
     if (data) {
 
       setShowScanner(false)
-      const wallet = data.text.split('|')[0]
-      setKey(data.text.split('|')[1])
+      const wallet = data.text
       setUserWallet(wallet)
 
       let res = await contract.methods?.getUserHistory(wallet).call()
       setHistory(res)
 
-      console.log('history', res)
       res = await contract.methods?.getUserRecord(wallet).call()
       setRecord(res)
 
@@ -95,7 +89,6 @@ export default function DrUsers() {
         <div className="bg-gray-100 px-4 py-10 sm:px-6 mt-4 rounded h-full">
           <Record
             data={record}
-            key={key}
             wallet={userWallet}
           />
         </div>
@@ -103,11 +96,11 @@ export default function DrUsers() {
 
 
       {
-        (key && userWallet) &&
+        (userWallet) &&
         <div className="bg-gray-100 px-4 py-10 sm:px-6 mt-4 rounded h-full">
           <History
-            key={key}
             wallet={userWallet}
+            canEdit={true}
           />
         </div>
       }

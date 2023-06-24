@@ -3,24 +3,40 @@ import CustomButton from "../ui-kit/CustomButton";
 import UpdateHistoryModal from "./UpdateHistoryModal";
 import {useEffect, useState} from "react";
 import useMeHealthScanner from "../hooks/useMeHealthScanner";
-import {decrypt} from "../utils/LitEncrypt";
+import {decrypt, decryptArray} from "../utils/LitEncrypt";
 
 
-export default function History({wallet, key}) {
+export default function History({wallet, canEdit = false}) {
   const [property, setProperty] = useState()
   const [history, setHistory] = useState()
+  const [chronicDiseases, setChronicDiseases] = useState()
+  const [surgeries, setSurgeries] = useState()
+  const [pathologicalHistory, setPathologicalHistory] = useState()
+  const [nonPathologicalHistory, setNonPathologicalHistory] = useState()
+  const [paternalFamilyInheritedPathologies, setPaternalFamilyInheritedPathologies] = useState()
+  const [maternalFamilyInheritedPathologies, setMaternalFamilyInheritedPathologies] = useState()
 
   const contract = useMeHealthScanner()
-  
+
   const init = async () => {
     setProperty(null)
     setHistory(null)
     let res = await contract.methods?.getUserHistory(wallet).call()
 
-    console.log('hist', res.chronicDiseases[0])
-    const decrypt = await getDecryptData(res.chronicDiseases[0])
-    console.log('decrypt', decrypt)
-    setHistory(res)
+
+    const decryptedChronicDiseases = await decryptArray(res.chronicDiseases)
+    const decryptedSurgeries = await decryptArray(res.surgeries)
+    const decryptedPathologicalHistory = await decryptArray(res.pathologicalHistory)
+    const decryptedNonPathologicalHistory = await decryptArray(res.nonPathologicalHistory)
+    const decryptedPaternalFamilyInheritedPathologies = await decryptArray(res.paternalFamilyInheritedPathologies)
+    const decryptedMaternalFamilyInheritedPathologies = await decryptArray(res.maternalFamilyInheritedPathologies)
+
+    setChronicDiseases(decryptedChronicDiseases)
+    setSurgeries(decryptedSurgeries)
+    setPathologicalHistory(decryptedPathologicalHistory)
+    setNonPathologicalHistory(decryptedNonPathologicalHistory)
+    setPaternalFamilyInheritedPathologies(decryptedPaternalFamilyInheritedPathologies)
+    setMaternalFamilyInheritedPathologies(decryptedMaternalFamilyInheritedPathologies)
   }
   useEffect(() => {
     init()
@@ -39,64 +55,86 @@ export default function History({wallet, key}) {
         <h3 className="text-base font-semibold leading-7 text-gray-900">User Medical History</h3>
       </div>
       <div className="mt-6 border-t border-gray-100">
-        {
-          history &&
-          <dl className="divide-y divide-gray-100">
-            <DataRow
-              title='Chronic Diaseases'
-              value={history?.chronicDiseases}
-            />
+        <dl className="divide-y divide-gray-100">
+          <DataRow
+            title='Chronic Diaseases'
+            value={chronicDiseases}
+          />
+
+          {
+            canEdit &&
             <CustomButton
               label='ADD'
               onCLick={() => updateHistory('chronicDiseases')}
             />
+          }
 
-            <DataRow
-              title='Surgeries'
-              value={history?.surgeries}
-            />
+
+          <DataRow
+            title='Surgeries'
+            value={surgeries}
+          />
+          {
+            canEdit &&
             <CustomButton
               label='ADD'
               onCLick={() => updateHistory('surgeries')}
             />
+          }
 
-            <DataRow
-              title='Pathological History'
-              value={history?.pathologicalHistory}
-            />
+
+          <DataRow
+            title='Pathological History'
+            value={pathologicalHistory}
+          />
+          {
+            canEdit &&
             <CustomButton
               label='ADD'
               onCLick={() => updateHistory('pathologicalHistory')}
             />
+          }
 
-            <DataRow
-              title='Non Pathological History'
-              value={history?.nonPathologicalHistory}
-            />
+
+          <DataRow
+            title='Non Pathological History'
+            value={nonPathologicalHistory}
+          />
+          {
+            canEdit &&
             <CustomButton
               label='ADD'
               onCLick={() => updateHistory('nonPathologicalHistory')}
             />
+          }
 
-            <DataRow
-              title='Pathernal pathologies'
-              value={history?.paternalFamilyInheritedPathologies}
-            />
+
+          <DataRow
+            title='Pathernal pathologies'
+            value={paternalFamilyInheritedPathologies}
+          />
+          {
+            canEdit &&
             <CustomButton
               label='ADD'
               onCLick={() => updateHistory('paternalFamilyInheritedPathologies')}
             />
+          }
 
-            <DataRow
-              title='Maternal Pathologies'
-              value={history?.martenalFamilyInheritedPathologies}
-            />
+
+          <DataRow
+            title='Maternal Pathologies'
+            value={maternalFamilyInheritedPathologies}
+          />
+          {
+            canEdit &&
             <CustomButton
               label='ADD'
-              onCLick={() => updateHistory('martenalFamilyInheritedPathologies')}
+              onCLick={() => updateHistory('maternalFamilyInheritedPathologies')}
             />
-          </dl>
-        }
+          }
+
+        </dl>
 
       </div>
 
@@ -104,7 +142,6 @@ export default function History({wallet, key}) {
         property &&
         <UpdateHistoryModal
           prop={property}
-          key={key}
           wallet={wallet}
           onItemUpdated={() => init()}
         />

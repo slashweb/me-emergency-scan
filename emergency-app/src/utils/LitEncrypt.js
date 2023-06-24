@@ -89,11 +89,17 @@ export const encrypt = async (message) => {
   return {encryptedString: JSON.stringify(objectToSave)}
 }
 
-export const decrypt = async (objectData) => {
+export const decryptArray = async (data) => {
+  if (!data) return []
+  if (data.length === 0) return []
+  let promises = data.map(el => (decrypt(el)))
+  return await Promise.all(promises)
+}
 
-  console.log('test', objectData)
+export const decrypt = async (objectData) => {
   await connect()
   await setAuth()
+
   let objectToDecrypt = JSON.parse(objectData)
 
   const symmetricKey = await client.getEncryptionKey({
@@ -106,29 +112,7 @@ export const decrypt = async (objectData) => {
   const decryptedString = await LitJsSdk.decryptString(
     base64StringToBlob(objectToDecrypt.data),
     symmetricKey
-  );
+  )
 
-  console.log('here', decryptedString)
   return decryptedString
 }
-
-const encryptString = async (str, key = null) => {
-
-  const encodedString: Uint8Array = LitJsSdk.uint8arrayFromString(str, 'utf8');
-
-  const symmKey: CryptoKey = key
-  const encryptedString: Blob = await encryptWithSymmetricKey(
-    symmKey,
-    encodedString.buffer
-  );
-
-  const exportedSymmKey: Uint8Array = new Uint8Array(
-    await crypto.subtle.exportKey('raw', symmKey)
-  );
-
-  return {
-    symmetricKey: exportedSymmKey,
-    encryptedString,
-    encryptedData: encryptedString,
-  };
-};

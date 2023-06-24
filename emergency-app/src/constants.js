@@ -3,7 +3,7 @@ export const PROFILE_IMAGE  ='https://cdn-icons-png.flaticon.com/512/3135/313571
 export const CHAIN_ID = 5
 export const CHAIN_NAME = 'goerli'
 
-export const CONTRACT_ID = '0x8eeB02Bd5aEC8C757323557A12048e921fA5A85c'
+export const CONTRACT_ID = '0xa398EAb9348e4a10D4cD035C84efaC3dC1024f16'
 export const ABI = [
 		{
 			"inputs": [
@@ -500,6 +500,30 @@ export const ABI = [
 				}
 			],
 			"name": "updateMedicalHistory",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "patien",
+					"type": "address"
+				},
+				{
+					"internalType": "string",
+					"name": "value",
+					"type": "string"
+				}
+			],
+			"name": "updateUserDrugs",
 			"outputs": [
 				{
 					"internalType": "bool",

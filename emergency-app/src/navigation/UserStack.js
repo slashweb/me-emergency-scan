@@ -9,6 +9,7 @@ import DrRegister from "../pages/DrRegister";
 import DrLayout from "../layouts/DrLayout";
 import DrDashboard from "../pages/DrDashboard";
 import DrUsers from "../pages/DrUsers";
+import Qr from "../components/Qr";
 
 export default function UserStack() {
   return <>
@@ -16,6 +17,8 @@ export default function UserStack() {
       <BrowserRouter>
         <Routes>
           <Route path='/logout' element={<LogOut/>}/>
+          <Route path='/qr' element={<UserLayout><Qr /></UserLayout>}/>
+
           <Route
             path='/'
             element={

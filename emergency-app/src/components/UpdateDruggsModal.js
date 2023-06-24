@@ -6,10 +6,10 @@ import CustomButton from "../ui-kit/CustomButton";
 import useMeHealthScanner from "../hooks/useMeHealthScanner";
 import {useAuth} from "../context/AuthContext";
 import Loading from "../ui-kit/Loading";
-import LitEncrypt, {encrypt} from "../utils/LitEncrypt";
-import {base64StringToBlob} from "@lit-protocol/lit-node-client";
+import {encrypt} from "../utils/LitEncrypt";
 
-export default function UpdateHistoryModal({prop, wallet, onItemUpdated}) {
+export default function UpdateDruggsModal({prop, wallet, onItemUpdated}) {
+
   const [open, setOpen] = useState(true)
   const [value, setValue] = useState()
   const [isLoading, setIsLoading] = useState(false)
@@ -17,11 +17,10 @@ export default function UpdateHistoryModal({prop, wallet, onItemUpdated}) {
   const contract = useMeHealthScanner()
   const {user} = useAuth()
 
-  const updateHistory = async () => {
+  const updateDruggs = async () => {
     setIsLoading(true)
     try {
-      const { encryptedString } = await encrypt(value)
-      await contract.methods?.updateMedicalHistory(wallet, prop, encryptedString).send({from: user.userId})
+      await contract.methods?.updateUserDrugs(wallet, value).send({from: user.userId})
       onItemUpdated()
     } catch (err) {
       console.log('Error saving prop ', err)
@@ -66,7 +65,7 @@ export default function UpdateHistoryModal({prop, wallet, onItemUpdated}) {
                       </div>
                       <div className="mt-3 text-center sm:mt-5">
                         <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                          Adding data to user history
+                          Adding druggs to profile
                         </Dialog.Title>
                         <div className="mt-2">
                           <TextInput
@@ -79,7 +78,7 @@ export default function UpdateHistoryModal({prop, wallet, onItemUpdated}) {
                     <div className="mt-5 sm:mt-6">
                       <CustomButton
                         label='Save'
-                        onCLick={() => updateHistory()}
+                        onCLick={() => updateDruggs()}
                       />
                     </div>
                   </Dialog.Panel>
