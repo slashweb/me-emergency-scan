@@ -5,6 +5,8 @@ import {useState} from "react";
 import useMeHealthScanner from "../hooks/useMeHealthScanner";
 import {useAuth} from "../context/AuthContext";
 import {useNavigate, useNavigation} from "react-router-dom";
+import {createUserKey} from "../utils/Polybase";
+import {generateUserKey} from "../utils/LitEncrypt";
 
 export default function Register() {
 
@@ -17,7 +19,7 @@ export default function Register() {
   const [surgeries, setSurgeries] = useState()
   const [recipes, setRecipes] = useState()
 
-  const { signIn, user, userRecord } = useAuth()
+  const {signIn, user, userRecord} = useAuth()
   const navigate = useNavigate()
   const contract = useMeHealthScanner()
 
@@ -26,7 +28,7 @@ export default function Register() {
       await signIn()
     }
 
-    if (userRecord.wallet.toUpperCase() === user.userId.toUpperCase()) {
+    if (userRecord.wallet.toUpperCase() === user.userId.toUpperCase() && false) {
       navigate('/dashboard')
       return
     }
@@ -40,8 +42,8 @@ export default function Register() {
       cronichConditions.split(','),
       surgeries.split(','),
       recipes.split(','))
-      .send({ from: user.userId })
-    console.log('res', res)
+      .send({from: user.userId})
+    navigate('/dashboard')
   }
 
   return (
@@ -106,6 +108,7 @@ export default function Register() {
             <div>
               <CustomButton
                 label={'Create new account'}
+                onCLick={() => {}}
               />
             </div>
           </form>

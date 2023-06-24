@@ -3,6 +3,7 @@ import CustomButton from "../ui-kit/CustomButton";
 import UpdateHistoryModal from "./UpdateHistoryModal";
 import {useEffect, useState} from "react";
 import useMeHealthScanner from "../hooks/useMeHealthScanner";
+import {decrypt} from "../utils/LitEncrypt";
 
 
 export default function History({wallet, key}) {
@@ -10,11 +11,15 @@ export default function History({wallet, key}) {
   const [history, setHistory] = useState()
 
   const contract = useMeHealthScanner()
-
+  
   const init = async () => {
     setProperty(null)
     setHistory(null)
     let res = await contract.methods?.getUserHistory(wallet).call()
+
+    console.log('hist', res.chronicDiseases[0])
+    const decrypt = await getDecryptData(res.chronicDiseases[0])
+    console.log('decrypt', decrypt)
     setHistory(res)
   }
   useEffect(() => {
@@ -22,6 +27,10 @@ export default function History({wallet, key}) {
   }, [])
   const updateHistory = prop => {
     setProperty(prop)
+  }
+
+  const getDecryptData = async data => {
+    const res = await decrypt(data)
   }
 
   return (

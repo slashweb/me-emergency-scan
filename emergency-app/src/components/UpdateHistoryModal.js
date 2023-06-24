@@ -6,6 +6,8 @@ import CustomButton from "../ui-kit/CustomButton";
 import useMeHealthScanner from "../hooks/useMeHealthScanner";
 import {useAuth} from "../context/AuthContext";
 import Loading from "../ui-kit/Loading";
+import LitEncrypt, {encrypt} from "../utils/LitEncrypt";
+import {base64StringToBlob} from "@lit-protocol/lit-node-client";
 
 export default function UpdateHistoryModal({prop, key, wallet, onItemUpdated}) {
   const [open, setOpen] = useState(true)
@@ -18,7 +20,11 @@ export default function UpdateHistoryModal({prop, key, wallet, onItemUpdated}) {
   const updateHistory = async () => {
     setIsLoading(true)
     try {
-      const res = await contract.methods?.updateMedicalHistory(wallet, prop, value).send({from: user.userId})
+
+
+      const { encryptedString } = await encrypt(value)
+      const res = await contract.methods?.updateMedicalHistory(wallet, prop, encryptedString).send({from: user.userId})
+      console.log('encripted string', encryptedString)
       onItemUpdated()
     } catch (err) {
       console.log('Error saving prop ', err)

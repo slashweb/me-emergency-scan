@@ -5,8 +5,13 @@
   "dependencies": {
     "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.18",
+    "@lit-protocol/crypto": "^2.2.26",
+    "@lit-protocol/lit-node-client": "^2.2.26",
+    "@lit-protocol/misc-browser": "^2.2.26",
+    "@lit-protocol/uint8arrays": "^2.2.26",
     "@polybase/auth": "^0.6.2",
     "@polybase/client": "^0.6.2",
+    "@polybase/eth": "^0.6.2",
     "@polybase/react": "^0.6.2",
     "@tailwindcss/forms": "^0.5.3",
     "@testing-library/jest-dom": "^5.16.5",

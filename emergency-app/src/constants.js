@@ -1,8 +1,9 @@
 export const MAIN_LOGO = 'https://res.cloudinary.com/dgcxcqu6p/image/upload/v1687567341/Me_yola1p.svg'
 export const PROFILE_IMAGE  ='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
-export const CHAIN_ID = 10200
+export const CHAIN_ID = 5
+export const CHAIN_NAME = 'goerli'
 
-export const CONTRACT_ID = '0xc7bf948ab9DB5dE2eC0686002FD1997d4e8A774E'
+export const CONTRACT_ID = '0x8eeB02Bd5aEC8C757323557A12048e921fA5A85c'
 export const ABI = [
 		{
 			"inputs": [
@@ -189,6 +190,25 @@ export const ABI = [
 				}
 			],
 			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "wallet",
+					"type": "address"
+				}
+			],
+			"name": "doctorExists",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
 			"type": "function"
 		},
 		{
