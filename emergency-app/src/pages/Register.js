@@ -2,6 +2,8 @@ import TextInput from "../ui-kit/TextInput";
 import CustomButton from "../ui-kit/CustomButton";
 import {MAIN_LOGO} from "../constants";
 import {useState} from "react";
+import useMeHealthScanner from "../hooks/useMeHealthScanner";
+import {useAuth} from "../context/AuthContext";
 
 export default function Register() {
 
@@ -14,8 +16,27 @@ export default function Register() {
   const [surgeries, setSurgeries] = useState()
   const [recipes, setRecipes] = useState()
 
-  const createNewProfile = () => {
+  const { signIn, user } = useAuth()
 
+  const contract = useMeHealthScanner()
+
+  const createNewProfile = async () => {
+    if (!user) {
+      const authRes = await signIn()
+      console.log('after login', authRes)
+    }
+console.log('after login', user)
+    const res = await contract?.methods?.createUserProfile(
+      name,
+      bloodType,
+      emergencyPhone,
+      emergencyName,
+      alergies.split(','),
+      cronichConditions.split(','),
+      surgeries.split(','),
+      recipes.split(','))
+      .send({ from: user.userId })
+    console.log('res', res)
   }
 
   return (
@@ -25,7 +46,7 @@ export default function Register() {
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-10 w-auto"
-            src={ MAIN_LOGO }
+            src={MAIN_LOGO}
             alt="Your Company"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
