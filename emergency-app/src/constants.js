@@ -1,9 +1,13 @@
 export const MAIN_LOGO = 'https://res.cloudinary.com/dgcxcqu6p/image/upload/v1687567341/Me_yola1p.svg'
 export const PROFILE_IMAGE = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
+
 export const CHAIN_ID = 100
 export const CHAIN_NAME = 'xdai'
+// export const CHAIN_ID = 1101
+// export const CHAIN_NAME = 'zkEvm'
 
 export const CONTRACT_ID = '0x559087F8732a619071551EE12517B59D37a9F261'
+// export const CONTRACT_ID = '0x8a35A8D70a790243B0D21C0D1c895352531bd5b2'
 export const ABI = [
 		{
 			"inputs": [
