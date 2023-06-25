@@ -1,9 +1,9 @@
 export const MAIN_LOGO = 'https://res.cloudinary.com/dgcxcqu6p/image/upload/v1687567341/Me_yola1p.svg'
 export const PROFILE_IMAGE = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
-export const CHAIN_ID = 5
-export const CHAIN_NAME = 'goerli'
+export const CHAIN_ID = 1101
+export const CHAIN_NAME = 'zkEvm'
 
-export const CONTRACT_ID = '0x903E3288BEC17bEC4b64028F93730c93a27BC1D1'
+export const CONTRACT_ID = '0x8a35A8D70a790243B0D21C0D1c895352531bd5b2'
 export const ABI = [
 		{
 			"inputs": [

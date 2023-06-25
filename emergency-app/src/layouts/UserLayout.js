@@ -14,6 +14,7 @@ export default function UserLayout({children}) {
 
   const navigationData = [
     {name: 'Dashboard', href: '/dashboard', current: false},
+    {name: 'Dashboard Dr', href: '/dr-dashboard', current: false},
     {name: 'Create Account', href: '/register', current: false},
     {name: 'Create Doctor', href: '/dr-register', current: false},
     {name: 'QR', href: '/qr', current: false},

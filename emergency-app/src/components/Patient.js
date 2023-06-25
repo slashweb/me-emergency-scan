@@ -11,9 +11,15 @@ export default function Patient({wallet}) {
 
 
   const init = async () => {
-    let res = await contract.methods?.getLastParamedicalData(wallet).call()
-    console.log('paramedical', res)
-    setData(res)
+    try {
+      let res = await contract.methods?.getLastParamedicalData(wallet).call()
+      console.log('paramedical', res)
+      setData(res)
+    } catch (err) {
+      console.log('err', err)
+    }
+
+
   }
 
   useEffect(() => {
