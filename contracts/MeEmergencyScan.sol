@@ -5,6 +5,7 @@ pragma solidity >=0.8.2 <0.9.0;
 contract MeEmergencyScan {
 
     struct ParamedicData {
+        address patien;
         string name;
         string date;
         string vitalSigns;
@@ -55,10 +56,11 @@ contract MeEmergencyScan {
     // General users for the plattform
     User[] public Users;
     MedicalHistory[] public MedicalHistories;
-
+    ParamedicData[] public ParamedicDatas;
 
     // Basic data for the users
     UserRecord public newUserRecord;
+
 
     // Doctors for the contract
     Doctor[] Doctors;
@@ -91,11 +93,71 @@ contract MeEmergencyScan {
         return empty;
     }
 
+    // Tells if a doctor exists
+    function doctorExists(address wallet) public view returns (bool) {
+        for (uint256 i=0; i < Doctors.length; i++) {
+            if (Doctors[i].wallet == wallet && Doctors[i].isActive) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Get doctor profile
+    function getDoctorData(address wallet) public view returns (Doctor memory) {
+        for (uint256 i=0; i < Doctors.length; i++) {
+            if (Doctors[i].wallet == wallet) {
+                return Doctors[i];
+            }
+        }
+
+        Doctor memory empty;
+        return empty;
+    }
+
     // Get All users records just for testing purpose
     function getAllUserRecords() public view returns (User[] memory) {
         return Users;
     }
 
+    function getLastParamedicalData(address wallet) public view returns (ParamedicData memory) {
+        for (uint256 i=ParamedicDatas.length -1; i >= 0; i--) {
+            if (ParamedicDatas[i].patien == wallet) {
+                return ParamedicDatas[i];
+            }
+        }
+
+        ParamedicData memory empty;
+        return empty;
+    }
+
+    function createNewParamedicData(
+        address patien,
+        string memory name,
+        string memory date,
+        string memory vitalSigns,
+        string memory status,
+        string[] memory drugs,
+        string[] memory procedures,
+        string memory lastMeal
+    ) public returns(bool) {
+
+
+        ParamedicDatas.push(
+            ParamedicData(
+                patien,
+                name,
+                date,
+                vitalSigns,
+                status,
+                drugs,
+                procedures,
+                lastMeal
+            )
+        );
+
+        return true;
+    }
 
     // Create basic new User Profile
     function createUserProfile(
@@ -125,6 +187,7 @@ contract MeEmergencyScan {
             surgeries,
             drugs
         );
+
 
         Users.push( User(msg.sender, 'user', newUserRecord));
         createMedicalHistory(msg.sender);
@@ -188,6 +251,18 @@ contract MeEmergencyScan {
         }
 
         return false;
+
+    }
+
+    function updateUserDrugs(address patien, string memory value) public returns (bool) {
+
+        for (uint256 i=0; i < Users.length; i++) {
+            if (Users[i].wallet == patien) {
+                Users[i].record.drugs.push(value);
+            }
+        }
+
+        return true;
 
     }
 
