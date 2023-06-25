@@ -1,9 +1,9 @@
 export const MAIN_LOGO = 'https://res.cloudinary.com/dgcxcqu6p/image/upload/v1687567341/Me_yola1p.svg'
-export const PROFILE_IMAGE  ='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
+export const PROFILE_IMAGE = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
 export const CHAIN_ID = 5
 export const CHAIN_NAME = 'goerli'
 
-export const CONTRACT_ID = '0xa398EAb9348e4a10D4cD035C84efaC3dC1024f16'
+export const CONTRACT_ID = '0x903E3288BEC17bEC4b64028F93730c93a27BC1D1'
 export const ABI = [
 		{
 			"inputs": [
@@ -19,6 +19,50 @@ export const ABI = [
 					"internalType": "address",
 					"name": "patien",
 					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"name": "ParamedicDatas",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "patien",
+					"type": "address"
+				},
+				{
+					"internalType": "string",
+					"name": "name",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "date",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "vitalSigns",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "status",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "lastMeal",
+					"type": "string"
 				}
 			],
 			"stateMutability": "view",
@@ -128,6 +172,60 @@ export const ABI = [
 				}
 			],
 			"name": "createDoctor",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "patien",
+					"type": "address"
+				},
+				{
+					"internalType": "string",
+					"name": "name",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "date",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "vitalSigns",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "status",
+					"type": "string"
+				},
+				{
+					"internalType": "string[]",
+					"name": "drugs",
+					"type": "string[]"
+				},
+				{
+					"internalType": "string[]",
+					"name": "procedures",
+					"type": "string[]"
+				},
+				{
+					"internalType": "string",
+					"name": "lastMeal",
+					"type": "string"
+				}
+			],
+			"name": "createNewParamedicData",
 			"outputs": [
 				{
 					"internalType": "bool",
@@ -312,6 +410,67 @@ export const ABI = [
 						}
 					],
 					"internalType": "struct MeEmergencyScan.Doctor",
+					"name": "",
+					"type": "tuple"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "wallet",
+					"type": "address"
+				}
+			],
+			"name": "getLastParamedicalData",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "address",
+							"name": "patien",
+							"type": "address"
+						},
+						{
+							"internalType": "string",
+							"name": "name",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "date",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "vitalSigns",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "status",
+							"type": "string"
+						},
+						{
+							"internalType": "string[]",
+							"name": "drugs",
+							"type": "string[]"
+						},
+						{
+							"internalType": "string[]",
+							"name": "procedures",
+							"type": "string[]"
+						},
+						{
+							"internalType": "string",
+							"name": "lastMeal",
+							"type": "string"
+						}
+					],
+					"internalType": "struct MeEmergencyScan.ParamedicData",
 					"name": "",
 					"type": "tuple"
 				}
@@ -535,3 +694,5 @@ export const ABI = [
 			"type": "function"
 		}
 	]
+
+

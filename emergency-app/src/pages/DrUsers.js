@@ -5,6 +5,7 @@ import CustomButton from "../ui-kit/CustomButton";
 import useMeHealthScanner from "../hooks/useMeHealthScanner";
 import History from "../components/History";
 import Record from "../components/Record";
+import Patient from "../components/Patient";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -94,6 +95,15 @@ export default function DrUsers() {
         </div>
       }
 
+
+      {
+        (userWallet) &&
+        <div className="bg-gray-100 px-4 py-10 sm:px-6 mt-4 rounded h-full">
+          <Patient
+            wallet={userWallet}
+          />
+        </div>
+      }
 
       {
         (userWallet) &&
